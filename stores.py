@@ -15,14 +15,14 @@ merchant_ids=[]
 for i in range(1,1000):
     merchant_ids.append('M'+f'{i:06}')
 df['Merchant_id'] =random.choices(merchant_ids,k=len(df))
-Sates=[]
+address=[]
 for i in range(1,3000):
-    Sates.append(ourFake.state())
-df['State'] = Sates
-City=[]
+    address.append('A'+f'{i:06}')
+df['address_id'] = address
+street=[]
 for i in range(1,3000):
-    City.append(ourFake.city())
-df['City'] = City
+    street.append(ourFake.street_address())
+df['street'] = street
 Tax=[]
 for i in range(1,3000):
     Tax.append(round(random.uniform(1.00,9.99), 2))

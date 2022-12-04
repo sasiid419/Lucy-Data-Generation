@@ -4,7 +4,6 @@ import pandas as pd
 ourFake = Faker()
 Faker.seed(111)
 random.seed(111)
-# 
 
 #Transaction_ID	User_Id	Merchant_Id	Store_Id	State	Category	Inst	Timestamp	Amount	Reciever_Id
 #T000000001	U000007	null null	SUCCESS	PEER-PEER	ACCOUNT	1/9/2022 9:59	93.32	U000004
@@ -46,7 +45,7 @@ df['Payment_instrument'] = random.choices(Payment_Instrument,k=len(df))
 timestamp = []
 for i in range(1,1100000):
     timestamp.append(ourFake.date_time_this_decade())
-    print("done..")
+    print(i)
 df['timestamp'] = timestamp
 count=0
 reciever_id = []
@@ -55,18 +54,17 @@ merchant_id = []
 for i in range(len(df)):
     if(df.loc[i,"payment_category"]=='PEER-PEER'):
         j=i%999
+        print(j)
         reciever_id.append(user_ids[j])
-        merchant_id.append('M001000')
         store_id.append("S000000")
     else:
-        reciever_id.append("null")
         j =i%2999
-        merchant_id.append(mapping.loc[j,"Merchant_id"])
+        print(j)
         store_id.append(mapping.loc[j,"store_id"])
+        reciever_id.append(store_id[i])
 df['reciever_id'] = reciever_id
-df['merchant_id'] = merchant_id
 df['store_id'] = store_id
 df['amount'] = amount
-df = df[['transaction_id', 'user_id', 'merchant_id','payment_state','store_id','payment_category','Payment_instrument','timestamp','amount','reciever_id']]
+df = df[['transaction_id', 'user_id','payment_state','store_id','payment_category','Payment_instrument','timestamp','amount','reciever_id']]
 print(df)
 df.to_csv('payments.csv')
